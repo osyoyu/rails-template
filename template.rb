@@ -1,3 +1,5 @@
+require 'open-uri'
+
 # Guess or just ask the user's preferred database
 case File.read('Gemfile')
 when /'sqlite3'/
@@ -9,6 +11,7 @@ when /'pg'/
 else
   ar_adapter ||= ask("Which database adapter do you wish to use?", limited_to: ['sqlite3', 'mysql2', 'pg'])
 end
+
 
 # Gemfile
 remove_file 'Gemfile'
@@ -47,3 +50,13 @@ end
 gem_group :production do
   gem 'unicorn'
 end
+
+
+# Replace application.html.erb
+remove_file 'app/views/layouts/application.html.erb'
+if File.exists?(File.join(File.dirname(__FILE__), 'application.html.slim'))
+  copy_file File.join(File.dirname(__FILE__), 'application.html.slim'), 'app/views/layouts/application.html.slim'
+else
+  get 'https://raw.githubusercontent.com/osyoyu/rails-template/master/application.html.slim', 'app/views/layouts/application.html.slim'
+end
+gsub_file 'app/views/layouts/application.html.slim', /APP_CONST_BASE/, @app_const_base
