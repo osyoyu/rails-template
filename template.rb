@@ -1,5 +1,3 @@
-require 'open-uri'
-
 # Guess or just ask the user's preferred database
 case File.read('Gemfile')
 when /'sqlite3'/
