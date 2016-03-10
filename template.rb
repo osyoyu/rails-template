@@ -1,7 +1,5 @@
 # Guess or just ask the user's preferred database
 case File.read('Gemfile')
-when /'sqlite3'/
-  ar_adapter = 'sqlite3'
 when /'mysql2'/
   ar_adapter = 'mysql2'
 when /'pg'/
