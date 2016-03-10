@@ -1,17 +1,37 @@
+# Guess or just ask the user's preferred database
+case File.read('Gemfile')
+when /'sqlite3'/
+  ar_adapter = 'sqlite3'
+when /'mysql2'/
+  ar_adapter = 'mysql2'
+when /'pg'/
+  ar_adapter = 'pg'
+else
+  ar_adapter ||= ask("Which database adapter do you wish to use?", limited_to: ['sqlite3', 'mysql2', 'pg'])
+end
+
+# Gemfile
 remove_file 'Gemfile'
 create_file 'Gemfile'
 
-# Gemfile
 add_source 'https://rubygems.org'
 
 gem 'rails', Rails::VERSION::STRING
-gem 'turbolinks'
 gem 'slim-rails'
-gem 'sass-rails'
+
+case ar_adapter
+when 'sqlite3'
+  gem 'sqlite3'
+when 'mysql2'
+  gem 'mysql2', '>= 0.3.13', '< 0.5'
+when 'pg'
+  gem 'pg'
+end
+
+gem 'rails_serve_static_assets' if yes?('Do you want Rails to serve static assets?')
+gem 'rails_stdout_logging' if yes?('Do you want logs sent to STDOUT?')
 
 gem_group :development, :test do
-  gem 'sqlite3'
-
   gem 'rspec-rails'
 
   gem 'byebug'
