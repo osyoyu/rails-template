@@ -55,5 +55,8 @@ end
 gsub_file 'app/views/layouts/application.html.slim', /APP_CONST_BASE/, @app_const_base
 
 
-if yes?('Do you plan to use browserify')
-yes? 
+if no?('Do you plan to use Sprockets? (say no if you plan to use Browserify)')
+  say "OK, I'll comment all Sprockets-style requires in application.{js,css}. You might want to require your Browserify output."
+  gsub_file 'app/assets/javascripts/application.js', %r{//=}, '//'
+  gsub_file 'app/assets/stylesheets/application.css', %r{\*=}, '*'
+end
