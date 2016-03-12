@@ -27,9 +27,6 @@ when 'pg'
   gem 'pg'
 end
 
-gem 'rails_serve_static_assets' if yes?('Do you want Rails to serve static assets?')
-gem 'rails_stdout_logging' if yes?('Do you want logs sent to STDOUT?')
-
 gem_group :development, :test do
   gem 'rspec-rails'
 
@@ -56,3 +53,7 @@ else
   get 'https://raw.githubusercontent.com/osyoyu/rails-template/master/application.html.slim', 'app/views/layouts/application.html.slim'
 end
 gsub_file 'app/views/layouts/application.html.slim', /APP_CONST_BASE/, @app_const_base
+
+
+if yes?('Do you plan to use browserify')
+yes? 
