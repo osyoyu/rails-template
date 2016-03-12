@@ -5,7 +5,7 @@ when /'mysql2'/
 when /'pg'/
   ar_adapter = 'pg'
 else
-  ar_adapter ||= ask("Which database adapter do you wish to use?", limited_to: ['sqlite3', 'mysql2', 'pg'])
+  ar_adapter ||= ask("Which database adapter do you wish to use? (Note: You might want to add a -d option to rails new.)", limited_to: ['sqlite3', 'mysql2', 'pg'])
 end
 
 
@@ -59,4 +59,8 @@ if no?('Do you plan to use Sprockets? (say no if you plan to use Browserify)')
   say "OK, I'll comment all Sprockets-style requires in application.{js,css}. You might want to require your Browserify output."
   gsub_file 'app/assets/javascripts/application.js', %r{//=}, '//'
   gsub_file 'app/assets/stylesheets/application.css', %r{\*=}, '*'
+end
+
+after_bundle do
+  generate "rspec:install"
 end

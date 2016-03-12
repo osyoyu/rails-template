@@ -5,3 +5,4 @@
 * Turbolinks 使いたい場合は手で `turbolinks` ジェムをリクアイアーした上で `application.js` でよしなにしてくれ
 * 使いたくない時は `--skip-turbolinks` だ
 * `rails new` に `-d` がついてればいい感じの動きをする
+* グローバルジェムを汚さない主義者は `~/.bundle/config` に `BUNDLE_PATH: ./vendor/bundle` とか書くと良い `--skip-bundle` はしないでくれ
